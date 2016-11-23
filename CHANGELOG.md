@@ -1,3 +1,61 @@
+## Release 0.4.1 (2016-11-23)
+
+```
+Baseline: 2a26c3c
+
+Cherry picks:
+   + a79581e: Add gpu compile support to MSVC wrapper script
+```
+
+New features:
+
+  - android_library now has a "exported_plugins" attribute just like
+    java_library
+  - Use --strict_system_includes to apply hdrs_check=strict also to
+        cc_library.includes, even if sandboxing is disabled.
+  - Bazel on Windows: java_binary can now be a the executable of
+    Skylark rule actions (ctx.action's executable argument)
+  - Packages are defined in BUILD.bazel as well as BUILD files.
+
+Important changes:
+
+  - getattr()'s 3-arg form no longer raises an error when the
+    retrieved field is a built-in method.
+  - --apk_signing_method default changed to v1. Android APKs are now
+    signed with the new ApkSignerTool by default.
+  - New rule: proto_lang_toolchain(), to support LANG_proto_library
+    rules on multiple platforms.
+  - Fix for Android clang++ std::stack segfault on 32bit x86. See
+    https://code.google.com/p/android/issues/detail?id=220159
+  - Default android_manifest_merger is now "android" which uses the
+    official Android manifest merger.
+    http://tools.android.com/tech-docs/new-build-system/user-guide/man
+    ifest-merger
+  - Do not propagate aspect to its own attributes when using '*'.
+  - Comparing sets (`if set1 < set2:`) is not allowed anymore in
+    Skylark because it didn't work correctly anyway.
+  - When --experimental_extra_action_top_level_only, Bazel reports
+    extra-actions for actions registered by Aspects injected by a
+    top-level rule (approximately).
+  - Blacklists for proto_lang_toolchain() no longer have to be
+    proto_library's.
+  - Extra actions now contain aspect-related information.
+  - Fix slicing bug where "abc"[:-4:-1] would give wrong answer
+  - Prevent spurious recompiles, e.g. with changing --test_arg.
+  - proto_library now produces a descriptor set, when built on the
+    command-line.
+  - Add ctx.coverage_instrumented function to Skylark, to indicate
+    whether a specific targets should be instrumented for code
+    coverage data collection.
+  - Use --loading_phase_threads to control the number of threads used
+    during the loading/analysis phase.
+  - Structs in Skylark are tested for structural equality instead of
+    reference equality.
+  - Skylark implementations of http_archive, new_http_archive, and
+    http_file.
+  - Labels like "@foo//:foo" can now be written as "@foo" in build
+    files
+
 ## Release 0.4.0 (2016-10-26)
 
 ```
